@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include ('./patials/head') %>
+<body>
+    <h1 style="text-align: center; margin-top: 100px; font-size: 40px; font-weight: 500; margin-bottom: 20px;">UPDATE ORCHID</h1>
+    <% if(error_msg != ''){ %>
+        <%= error_msg %>
+    <% } %>
+    <form method="post" class="container is-max-desktop" style="margin-top: 10px;" enctype="multipart/form-data">
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">Name</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                    <div class="control">
+                        <input class="input is-info" required name="name" type="text" value="<%= orchid.name %>">
+                    </div>  
+                    <p class="help is-danger">
+                        <%= %>
+                    </p>             
+                </div>
+            </div>
+        </div>
+        
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">Image</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                    <div class="control">
+                        <div class="file has-name is-boxed is-primary">
+                            <label class="file-label">
+                                <input class="file-input" type="file" name="file">
+                                <span class="file-cta" style="background-color: #AEC3AE;">
+                                    <span class="file-icon">
+                                        <i class="fas fa-upload"></i>
+                                    </span>
+                                    <span class="file-label">
+                                        Choose a file…
+                                    </span>
+                                </span>
+                                <span class="file-name">
+                                    No file selected
+                                </span>
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+    <div style="display: flex; align-items: center; justify-content: space-around; width: 60vw; margin-left: 6vw;">
+
+        <div class="field is-horizontal" style="margin-right: 2rem;">
+            <div class="field-label is-normal">
+                <label class="label">Origin</label>
+            </div>
+            <div class="field-body">
+                <div class="field is-narrow">
+                    <div class="control">
+                        <input class="input is-info" name="origin" required value="<%= orchid.origin %>">
+                    </div>                    
+                </div>
+            </div>
+        </div>
+        <div class="field is-horizontal" style="margin-right: 37rem;">
+            <div class="field-label is-normal">
+                <label class="label">Category</label>
+            </div>
+            <div class="field-body">
+                <div class="field is-narrow">
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select name="category">
+                                <%for (let category of categoriesList){ %>                                 
+                                    <option value="<%= category._id %>" <%=JSON.stringify(category.categoryName)===JSON.stringify(orchid.category.categoryName) ? 'selected' : '' %>>
+                                        <%= category.categoryName %>
+                                    </option>
+                                    <% } %>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+        <div class="field is-horizontal" style="display: flex; justify-content: center; align-items: center;">
+            <div class="field-label is-normal">
+              <label class="label" style="padding-bottom: 10px;">isNatural</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <div class="control">
+                  <label class="checkbox">
+                    <input type="checkbox" name="isNatural" value="true" <%= orchid.isNatural ? 'checked' : '' %>>
+                    Yes, This is Natural
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        <div class="field is-horizontal">
+            <div class="field-body">
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-primary" style="margin-left: 180px; background-color: #AEC3AE;" type="submit" >
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+<script>
+     //   file
+     document.addEventListener('DOMContentLoaded', () => {
+            const fileInput = document.querySelector('.file-input');
+            const fileName = document.querySelector('.file-name');
+
+            fileInput.addEventListener('change', () => {
+                const file = fileInput.files[0];
+                if (file) {
+                    fileName.textContent = file.name;
+                } else {
+                    fileName.textContent = 'No file selected';
+                }
+            });
+        });
+</script>
+</html>

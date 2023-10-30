@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include ('./patials/head') %>
+
+    <body style=" height: 100vh;">
+        <h1 class="tag is-danger"
+            style="margin-top: 55px; font-size: 36px;font-weight: 900;margin-bottom: 20px;display: flex; justify-content: center; align-items: center; background-color: #748E63;">
+           Orchids Page</h1>
+        <!-- popup -->
+        <a class="button is-primary" style="position: fixed; top: 25vh; right: 16vw;background-color: #748E63;"
+            onClick="document.querySelector('#popup').classList.add('is-active')">
+            New Orchid
+        </a>
+        <% if(error_msg !='' ){ %>
+            <div class="notification is-danger is-light"
+                style="margin-top: 55px;font-size: 36px;font-weight: 900;margin-bottom: 20px;display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 18px;"
+                style="margin-top: 100px;">
+                <%= error_msg %>
+            </div>
+            <% } %>
+                <div id="popup" class="modal">
+                    <div class="modal-background"></div>
+                    <div class="modal-card">
+                        <header class="modal-card-head" style="background-color: #AEC3AE;">
+                            <p class="modal-card-title" style="text-align: center; font-weight: 700">ADD NEW ORCHID
+                            </p>
+                            <button class="delete" aria-label="close"
+                                onclick="document.querySelector('#popup').classList.remove('is-active')"></button>
+                        </header>
+                        <section class="modal-card-body">
+                            <form method="post" action="/orchids" enctype="multipart/form-data">
+                                <div class="field is-horizontal">
+                                    <div class="field-label is-normal">
+                                        <label class="label">Name</label>
+                                    </div>
+                                    <div class="field-body">
+                                        <div class="field">
+                                            <div class="control">
+                                                <input class="input is-info" name="name" type="text"
+                                                    placeholder="e.g. Messi" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="field is-horizontal">
+                                    <div class="field-label is-normal">
+                                        <label class="label">Image</label>
+                                    </div>
+                                    <div class="field-body" >
+                                        <div class="field" >
+                                            <div class="control" >
+                                                <div class="file has-name is-boxed is-primary" >
+                                                    <label class="file-label" >
+                                                        <input class="file-input" type="file" name="file" required>
+                                                        <span class="file-cta" style="background-color: #AEC3AE;">
+                                                            <span class="file-icon">
+                                                                <i class="fas fa-upload"></i>
+                                                            </span>
+                                                            <span class="file-label">
+                                                                Choose a file…
+                                                            </span>
+                                                        </span>
+                                                        <span class="file-name">
+                                                            No file selected
+                                                        </span>
+                                                    </label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                               
+                               
+                                <div class="field is-horizontal">
+                                    <div class="field-label is-normal">
+                                        <label class="label">Category</label>
+                                    </div>
+                                    <div class="field-body">
+                                        <div class="field is-narrow">
+                                            <div class="control">
+                                                <div class="select is-fullwidth">
+                                                    <select name="category">
+                                                        <%for (let category of categoriesList){ %>
+                                                            <option value="<%= category._id %>">
+                                                                <%= category.categoryName %>
+                                                            </option>
+                                                            <% } %>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field is-horizontal">
+                                    <div class="field-label is-normal">
+                                        <label class="label">Origin</label>
+                                    </div>
+                                    <div class="field-body">
+                                        <div class="field ">
+                                            <div class="control">
+                                                <textarea class="textarea" placeholder="Let's career"
+                                                    name="origin"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field is-horizontal"
+                                    style="display: flex; justify-content: center; align-items: center;">
+                                    <div class="field-label is-normal">
+                                        <label class="label" style="padding-bottom: 10px;">isNatural</label>
+                                    </div>
+                                    <div class="field-body">
+                                        <div class="field">
+                                            <div class="control">
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="isNatural" value="true">
+                                                    Yes, This is natural
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field is-horizontal" style="margin-left: 120px; ">
+                                    <div class="field-body">
+                                        <div class="field">
+                                            <div class="control">
+                                                <button class="button is-primary" type="submit"
+                                                    style="font-weight: 700; background-color: #AEC3AE;">
+                                                    Create
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- table content -->
+                <div style="display: flex; justify-content: center;">
+                    <div>
+                        <table id="mytable" class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth"
+                            style="width: 1000px;">
+                            <thead style="height: 40px; background-color: #94A684; ">
+                                <tr>
+                                    <th style="text-align: center;">Image</th>
+                                    <th style="text-align: center;">Name</th>
+                                    <th style="text-align: center;">Origin</th>                                 
+                                    <th style="text-align: center;">Category</th>
+                                    <th style="text-align: center;">isNatural</th>
+                                    <th style="text-align: center;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody style="text-align: center;">
+                                <% orchids.forEach(function(orchid) { %>
+                                    <tr>
+                                        <td style="width: 126px">
+                                                <img style="object-fit: contain;" src=<%=orchid.image%> >
+                                        </td>
+                                        <td style="padding-top: 60px;">
+                                            <%= orchid.name %>
+                                        </td>
+                                        <td style="padding-top: 60px;">
+                                            <%= orchid.origin %>
+                                        </td>
+                                       
+                                        <td style="padding-top: 60px;">
+                                            <%= orchid.category.categoryName %>
+                                        </td>
+                                        <td style="padding-top: 60px;">
+                                            <%=orchid.isNatural===true ? 'Yes' : 'No' %>
+                                        <td>
+                                            <div class="navbar-item has-dropdown is-hoverable" style="width: 10px;">
+                                                <span class="icon" style="padding-left:50px; padding-top: 60px;">
+                                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                </span>
+                                                <div class="navbar-dropdown">
+                                                    <a class="navbar-item" href="/orchids/edit/<%=orchid.id %>"><i
+                                                            class="fa-solid fa-pencil"
+                                                            style="margin-left: 6px; margin-right: 10px;"></i>Edit</a>
+                                                    <a class="navbar-item" href="/orchids/delete/<%=orchid.id %>"
+                                                        onclick="return confirm('Are you sure ???')"><i
+                                                            class="fa-solid fa-trash-can"
+                                                            style="margin-left: 6px; margin-right: 10px;"></i>Delete</button></a>
+
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+    </body>
+    <script>
+        // Lấy đối tượng table
+        const table = document.querySelector('#mytable');
+        $(document).ready(function () {
+            $('#mytable').DataTable();
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get all "dropdown" elements
+            var dropdowns = Array.prototype.slice.call(document.querySelectorAll('.dropdown'), 0);
+
+            // Loop through all dropdowns and bind click event
+            dropdowns.forEach(function (dropdown) {
+                dropdown.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                    dropdown.classList.toggle('is-active');
+                });
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function (event) {
+                closeDropdowns();
+            });
+
+            function closeDropdowns() {
+                dropdowns.forEach(function (dropdown) {
+                    dropdown.classList.remove('is-active');
+                });
+            }
+        });
+        //   file
+        document.addEventListener('DOMContentLoaded', () => {
+            const fileInput = document.querySelector('.file-input');
+            const fileName = document.querySelector('.file-name');
+
+            fileInput.addEventListener('change', () => {
+                const file = fileInput.files[0];
+                if (file) {
+                    fileName.textContent = file.name;
+                } else {
+                    fileName.textContent = 'No file selected';
+                }
+            });
+        });
+    </script>
+
+</html>

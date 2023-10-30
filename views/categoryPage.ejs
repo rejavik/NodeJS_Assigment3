@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include ('./patials/head') %>
+
+    <body style=" height: 100vh;">
+        <h1 class="tag is-danger"
+        style="margin-top: 55px; font-size: 36px;font-weight: 900;margin-bottom: 20px;display: flex; justify-content: center; align-items: center; background-color: #748E63;">
+            Categories Page</h1>
+        <a class="button is-primary" style="position: fixed; top: 15vh; right: 14vw; background-color: #748E63;"
+            onClick="document.querySelector('#popup2').classList.add('is-active')">
+            New Category
+        </a>
+        <% if(error_msg !='' ){ %>
+            <div class="notification is-danger is-light"
+            style="margin-top: 55px;font-size: 36px;font-weight: 900;margin-bottom: 20px;display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 18px;">
+                <%= error_msg %>
+            </div>
+            <% } %>
+
+                <!-- Popup -->
+                <div id="popup2" class="modal">
+                    <div class="modal-background"></div>
+                    <div class="modal-card">
+                        <header class="modal-card-head" style="background-color:#AEC3AE">
+                            <p class="modal-card-title" style="text-align: center; font-weight: 700;"> ADD NEW CATEGORY
+                            </p>
+                            <button class="delete" aria-label="close"
+                                onclick="document.querySelector('#popup2').classList.remove('is-active')">
+                            </button>
+                        </header>
+                        <section class="modal-card-body">
+                            <form method="post" action="/categories">
+                                <div class="field is-horizontal">
+                                    <div class="field-label is-normal">
+                                        <label class="label">Name</label>
+                                    </div>
+                                    <div class="field-body">
+                                        <div class="field">
+                                            <div class="control">
+                                                <input class="input is-info" required name="categoryName" type="text"
+                                                    placeholder="e.g. Hoa Lan">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field is-horizontal" style="margin-left: 120px;">
+                                    <div class="field-body">
+                                        <div class="field">
+                                            <div class="control">
+                                                <button class="button is-primary" type="submit"
+                                                    style="font-weight: 700; background-color: #AEC3AE;">
+                                                    Create
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- table content -->
+                <div style="display:flex; justify-content: center;">
+                    <div>
+                        <table id="mytable" class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth"
+                            style="width: 1000px;">
+                            <thead style="height: 40px; background-color: #94A684;">
+                                <tr>
+                                    <th style="text-align: center;">Category Name</th>  
+                                    <th style="text-align: center;">Actions</th>                                
+                                </tr>
+                            </thead>
+                            <tbody style="text-align: center">
+                                <% categories.forEach(function(category) { %>
+                                    <tr>
+                                        <td style="padding-top: 18px;">
+                                            <%= category.categoryName %>
+                                        </td>
+                                       
+                                        <td
+                                            style="padding-top: 20px;">
+                                            <div style="display: flex; justify-content: center; align-items: center;">
+                                                <div class="navbar-item has-dropdown is-hoverable" style="width: 30px;">
+                                                    <span class="icon">
+                                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                    </span>
+                                                    <div class="navbar-dropdown">
+                                                        <a class="navbar-item" href="/categories/edit/<%=category.id %>"><i
+                                                                class="fa-solid fa-pencil"
+                                                                style="margin-left: 6px; margin-right: 10px;"></i>Edit</a>
+                                                        <a class="navbar-item" href="/categories/delete/<%=category.id %>"
+                                                            onclick="return confirm('Are you sure ???')"><i
+                                                                class="fa-solid fa-trash-can"
+                                                                style="margin-left: 6px; margin-right: 10px;"></i>Delete</button></a>
+    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           
+
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <!-- popup -->
+
+    </body>
+    <script>
+        $(document).ready(function () {
+            $('#mytable').DataTable();
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get all "dropdown" elements
+            var dropdowns = Array.prototype.slice.call(document.querySelectorAll('.dropdown'), 0);
+
+            // Loop through all dropdowns and bind click event
+            dropdowns.forEach(function (dropdown) {
+                dropdown.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                    dropdown.classList.toggle('is-active');
+                });
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function (event) {
+                closeDropdowns();
+            });
+
+            function closeDropdowns() {
+                dropdowns.forEach(function (dropdown) {
+                    dropdown.classList.remove('is-active');
+                });
+            }
+        });       
+    </script>
+
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include ('./patials/head') %>
+  <body>
+    <h1
+      class="tag is-danger"
+      style="
+        margin-top: 55px;
+        font-size: 36px;
+        font-weight: 900;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #748e63;
+      "
+    >
+      Dashboard Page
+    </h1>
+    <div style="display: flex; justify-content: space-around">
+      <div class="card" style="width: 30vw">
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img
+              src="https://noithatbinhminh.com.vn/wp-content/uploads/2022/12/anh-hoa-anh-dao-dep-6.jpg"
+              alt="Placeholder image"
+            />
+          </figure>
+        </div>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-content">
+              <p class="title is-4">Total Orchids</p>
+              <p class="subtitle is-6" style="font-weight: bold">
+                <%= totalOrchids %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ------------ -->
+      <div class="card" style="width: 30vw">
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img
+              src="https://png.pngtree.com/thumb_back/fw800/background/20230611/pngtree-collection-of-many-different-and-colorful-flowers-image_2908834.jpg"
+              alt="Placeholder image"
+            />
+          </figure>
+        </div>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-content">
+              <p class="title is-4">Total Categories</p>
+              <p class="subtitle is-6" style="font-weight: bold">
+                <%= totalCategories %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- --------- -->
+      <div class="card" style="width: 30vw">
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img
+              src="https://cdn.24h.com.vn/upload/4-2021/images/2021-11-25/Co-gai-lot-do-ngay-giua-vuon-cuc-hoa-mi-va-1001-kieu-dien-do-phan-cam-chup-hinh-78680-dia-diem-di-choi-8-3-o-ha-noi-1637808279-228-width1024height682.jpg"
+              alt="Placeholder image"
+            />
+          </figure>
+        </div>
+        <div class="card-content">
+          <div class="media">
+            <div class="media-content">
+              <p class="title is-4">Total Users</p>
+              <p class="subtitle is-6" style="font-weight: bold">
+                <%= totalUsers %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <%- include ('./patials/footer') %>
+</html>

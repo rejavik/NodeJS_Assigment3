@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include ('./patials/head') %>
+  <body>
+    <div style="margin-top: 90px">
+      <% if(error_msg !='' ){ %>
+      <div
+        class="notification is-danger is-light"
+        style="
+          margin-top: 55px;
+          font-size: 36px;
+          font-weight: 900;
+          margin-bottom: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-weight: bold;
+          font-size: 18px;
+        "
+        style="margin-top: 100px"
+      >
+        <%= error_msg %>
+      </div>
+      <% } %> <% if(success_msg !='' ){ %>
+      <div
+        class="notification is-success is-light"
+        style="
+          margin-top: 55px;
+          font-size: 36px;
+          font-weight: 900;
+          margin-bottom: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-weight: bold;
+          font-size: 18px;
+        "
+        style="margin-top: 100px"
+      >
+        <%= success_msg %>
+      </div>
+      <% } %>
+    </div>
+    <form style="width: 30vw" method="GET">
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100vw;
+        "
+      >
+        <div class="field">
+          <div class="control has-icons-left">
+            <input
+              class="input"
+              name="name"
+              style="width: 400px"
+              type="text"
+              placeholder="Search by orchid name...."
+            />
+            <span class="icon is-small is-left">
+              <i class="fas fa-search"></i>
+            </span>
+          </div>
+        </div>
+        <div class="field is-grouped">
+          <div class="control">
+            <button
+              class="button is-primary"
+              style="
+                width: 80px;
+                margin-bottom: 10px;
+                margin-left: 10px;
+                background-color: #748e63;
+              "
+            >
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div
+      class="columns is-multiline"
+      style="margin-top: 10px; margin-left: 20px; margin-right: 20px"
+    >
+      <% orchids.forEach(function(orchid) { %>
+      <div class="column is-one-quarter">
+        <div class="card">
+          <div class="card-image">
+            <figure class="image is-square">
+              <img src="<%= orchid.image %>" alt="Placeholder image" />
+            </figure>
+          </div>
+
+          <div class="card-content">
+            <div class="media">
+              <div class="media-content">
+                <p class="title is-4"><%= orchid.name %></p>
+                <p class="subtitle is-6">
+                  Category: <%= orchid.category.categoryName %>
+                </p>
+              </div>
+            </div>
+            <a
+              href="/orchids/<%=orchid.id%>"
+              class="button is-primary"
+              style="width: 100%; background-color: #748e63"
+              >Detail</a
+            >
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </body>
+  <%- include ('./patials/footer') %>
+</html>
