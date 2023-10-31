@@ -188,7 +188,7 @@ class OrchidController {
             }
           }
         }
-        if (!check) {
+        if (check === false) {
           const newComment = {
             rating: req.body.rating,
             comment: req.body.comment,
