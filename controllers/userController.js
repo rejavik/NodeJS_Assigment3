@@ -1,6 +1,5 @@
 const bcrypt = require("bcrypt");
 const User = require("../model/user");
-var passport = require("passport");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 
@@ -162,13 +161,6 @@ class userController {
       return res.render("login");
     }
   }
-  signin(req, res, next) {
-    passport.authenticate("local", {
-      successRedirect: "/users/dashboard",
-      failureRedirect: "/users/login/",
-      failureFlash: true,
-    })(req, res, next);
-  }
 
   dashboard(req, res, next) {
     res.render("dashboard", {
@@ -259,7 +251,7 @@ class userController {
     User.findOne({ username: userName })
       .then((user) => {
         if (!user) {
-          req.flash("error_msg", "This username is not registed!");
+          req.flash("error_msg", "This account is not exist!");
           return res.redirect("/users/login");
         }
         //Match password
